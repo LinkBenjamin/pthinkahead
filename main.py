@@ -1,42 +1,44 @@
-import pygame
+import pygame, sys
+from app.modules.gametile import Tile
+from app.modules.player import Player
+from app.views.ui import UI
+from app.modules.gameboard import Gameboard
+from config.constants import *
 
-WIDTH, HEIGHT = 800, 600
-WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+class PThinkAhead():
+    def __init__(self):
+        pygame.init()
+        self.WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.WINDOW.fill(COLORS_WINDOW_BACKGROUND)
+        self.CLOCK = pygame.time.Clock()
+        self.GAME_STATE = 'RUN'
+        pygame.display.set_caption(GAME_TITLE)
+    
+        #self.new_game_screen = NewGameScreen()
+        self.gameboard = Gameboard()
+        self.player1 = Player("Ben")
+        self.player2 = Player("Josh")
+        self.ui = UI(self.player1, self.player2, self.gameboard)
+    
+    def run(self):
+        while True:
+            if 'RUN' in self.GAME_STATE:
+                self.handle_events()
+                self.update_screen()
+                self.CLOCK.tick(FPS)
+            elif 'QUIT' in self.GAME_STATE:
+                pygame.quit()
+                sys.exit()
 
-WINDOW_BACKGROUND = (0,0,0)
-WINDOW_TEXT = (255,255,255)
-PLAYER1 = (255,100,100)
-PLAYER2 = (100,100,255)
-TILE_BACKGROUND = (200,200,200)
-TILE_TEXT = (0,0,0)
-FPS = 60
-CLOCK = pygame.time.Clock()
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.GAME_STATE = 'QUIT'
 
-pygame.display.set_caption("Think Ahead")
-
-def set_configuration():
-    WINDOW.fill(WINDOW_BACKGROUND)
-
-def handle_events():
-    playGame = True
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            playGame = False
-    return playGame
-
-def update_screen():
-    pygame.display.update()
-        
-def main():
-    set_configuration()
-
-    run = True
-    while run:
-        CLOCK.tick(FPS)
-        run = handle_events()
-        update_screen()
-
-    pygame.quit()
+    def update_screen(self):
+        self.ui.display()
+        pygame.display.update()
 
 if __name__ == "__main__":
-    main()
+    game = PThinkAhead()
+    game.run()
