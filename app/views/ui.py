@@ -1,4 +1,5 @@
 import pygame
+import app.modules.gameboard
 
 from config.constants import *
 
@@ -8,11 +9,12 @@ class UI:  # Controls the overall running of the game.
         self.player2 = player2
         self.gameboard = gameboard
         self.p1turn = True # This is how we'll control whose turn it is.  Every move will cause this to flip.
+        self.gameboard.set_turn(self.p1turn)
 
     def display(self):
         self.player1.display(1,self.p1turn,COLORS_PLAYER_1)
         self.player2.display(2,not self.p1turn, COLORS_PLAYER_2)
-        # TODO: self.gameboard.display()
+        self.gameboard.draw()
 
 # When a player clicks a valid tile:
 # - The move is written to the game log.

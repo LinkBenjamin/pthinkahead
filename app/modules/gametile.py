@@ -11,6 +11,8 @@ class Tile():
         self.face_value = face_value
         self.active = True          # Boolean, whether this space has been played yet or not
         self.location = location    # Tuple, x and y pixel coordinates used to draw the square
+        self.is_cursor = False
+        self.is_highlighted = False
         
         # Drawing properties
         self.display_surface = pygame.display.get_surface()
@@ -26,12 +28,33 @@ class Tile():
         else:
             rval = int(self.face_value)
 
+        self.set_cursor()
         return rval
     
+    def set_cursor(self):
+        self.face_value = '@'
+        self.is_cursor = True
+        self.active = False
+
+    def set_blank(self):
+        self.face_value = ' '
+        self.active = False
+
+    def highlight(self):
+        self.is_highlighted = True
+
+    def clear_highlight(self):
+        self.is_highlighted = False
+
     def draw(self):
         tile_rect = pygame.Rect(self.location[0], self.location[1],TILE_SIZE,TILE_SIZE).inflate(-5,-5)
         value_surf = self.font.render(str(self.face_value), False, COLORS_TILE_TEXT)
         value_rect = value_surf.get_rect(center = tile_rect.center)
 
-        pygame.draw.rect(self.display_surface, COLORS_TILE_BACKGROUND,tile_rect)
+        if self.is_cursor:
+            pygame.draw.rect(self.display_surface, COLORS_CURSOR,tile_rect)
+        elif self.is_highlighted:
+            pygame.draw.rect(self.display_surface, COLORS_TILE_HIGHLIGHT,tile_rect)
+        else:
+            pygame.draw.rect(self.display_surface, COLORS_TILE_BACKGROUND,tile_rect)
         self.display_surface.blit(value_surf, value_rect)
