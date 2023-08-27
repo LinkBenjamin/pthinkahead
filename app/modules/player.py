@@ -6,6 +6,7 @@ from config.constants import *
 class Player():
     def __init__(self, player_name):
         self.name = player_name
+        self.has_scramble = True
 
          # Drawing properties
         self.display_surface = pygame.display.get_surface()
@@ -17,11 +18,11 @@ class Player():
         self.reset()
 
     def reset(self):
-        self.score = 0
+        self.points = 0
         self.has_scramble = True 
         
     def score(self, points):
-        self.score += points
+        self.points += points
 
     def scramble(self):
         self.has_scramble = False
@@ -36,7 +37,7 @@ class Player():
             direction = '>' # Player 2 is always the horizontal player
 
         # Create the player display box
-        player_rect = pygame.Rect(location[0], location[1],160,60)
+        player_rect = pygame.Rect(location[0], location[1],260,60)
         pygame.draw.rect(self.display_surface, color,player_rect)
 
         # - Shows my name
@@ -50,18 +51,18 @@ class Player():
         self.display_surface.blit(name_surf, name_rect)
 
         # - Shows my score
-        score_box = pygame.Rect(location[0]+100, location[1],TILE_SIZE,TILE_SIZE)
-        score_text = self.font_big.render(str(self.score), False, COLORS_TILE_TEXT)
+        score_box = pygame.Rect(location[0]+200, location[1],TILE_SIZE,TILE_SIZE)
+        score_text = self.font_big.render(str(self.points), False, COLORS_TILE_TEXT)
         score_rect = score_text.get_rect(center = score_box.center)
         pygame.draw.rect(self.display_surface, 'gray', score_box)
         self.display_surface.blit(score_text, score_rect)
 
         # - Shows whether I have a scramble left (has_scramble)
+        scramble_button = pygame.Rect(location[0] + 10, location[1] + 30, 80, 30)
+        scramble_text = self.font_tiny.render("Scramble", False, COLORS_TILE_TEXT)
+        self.scramble_rect = scramble_text.get_rect(center = scramble_button.center).inflate(3,3)
+        scramble_rect_ol = scramble_text.get_rect(center = scramble_button.center).inflate(8,8)
         if self.has_scramble and my_turn:
-            scramble_button = pygame.Rect(location[0] + 10, location[1] + 30, 80, 30)
-            scramble_text = self.font_tiny.render("Scramble", False, COLORS_TILE_TEXT)
-            scramble_rect = scramble_text.get_rect(center = scramble_button.center).inflate(3,3)
-            scramble_rect_ol = scramble_text.get_rect(center = scramble_button.center).inflate(8,8)
             pygame.draw.rect(self.display_surface, 'black', scramble_rect_ol)
-            pygame.draw.rect(self.display_surface, 'gray', scramble_rect)
-            self.display_surface.blit(scramble_text, scramble_rect)
+            pygame.draw.rect(self.display_surface, 'gray', self.scramble_rect)
+            self.display_surface.blit(scramble_text, self.scramble_rect)

@@ -4,23 +4,35 @@ import app.modules.gameboard
 from config.constants import *
 
 class UI:  # Controls the overall running of the game.
-    def __init__(self, player1, player2, gameboard):
-        self.player1 = player1
-        self.player2 = player2
+    def __init__(self, gameboard):
         self.gameboard = gameboard
-        self.p1turn = True # This is how we'll control whose turn it is.  Every move will cause this to flip.
-        self.gameboard.set_turn(self.p1turn)
 
     def display(self):
-        self.player1.display(1,self.p1turn,COLORS_PLAYER_1)
-        self.player2.display(2,not self.p1turn, COLORS_PLAYER_2)
+        # The gameboard's components know how to draw themselves.
+        # TODO: refactor those draw instructions out to here at some point in the future
+        # so that concerns are properly separated
         self.gameboard.draw()
 
-# When a player clicks a valid tile:
-# - The move is written to the game log.
-# - Score is updated.
-# - The Current Tile cursor is deactivated.
-# - The Selected Tile becomes the cursor.
-# - We check the win condition - will the next player have any valid moves (tile or scramble)
-# - Toggle p1turn
-# - Highlight the row/column of valid moves (draw a box around them, half-transparent, overlaid on top)
+    def handle_events(self):
+        pressed = pygame.mouse.get_pressed()
+        button = ' '
+        if pressed[0]:
+            # Mouse was clicked
+            location = pygame.mouse.get_pos()
+
+            for i in range(GAME_ROWS):
+                for j in range(GAME_COLS):
+                    # if the mouse position is on a game tile
+                    if self.gameboard.tiles[i][j].tile_rect.collidepoint(location):
+                        # if that tile hasn't yet been played and is currently highlighted (valid move)
+                        if self.gameboard.tiles[i][j].active and self.gameboard.tiles[i][j].is_highlighted:
+                            self.gameboard.play(self.gameboard.tiles[i][j])
+
+            # if it's player 1's turn and they click their "scramble" button, 
+            # scramble the board (if allowed)
+            if self.gameboard.player_turn and self.gameboard.player1.scramble_rect.collidepoint(location):
+                self.gameboard.scramble()
+            # if it's player 2's turn and they click their "scramble" button,
+            # scramble the board (if allowed)
+            if (not self.gameboard.player_turn) and self.gameboard.player2.scramble_rect.collidepoint(location):
+                self.gameboard.scramble()

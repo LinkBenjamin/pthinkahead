@@ -15,14 +15,13 @@ class PThinkAhead():
         pygame.display.set_caption(GAME_TITLE)
     
         #self.new_game_screen = NewGameScreen()
-        self.gameboard = Gameboard()
-        self.player1 = Player("Ben")
-        self.player2 = Player("Josh")
-        self.ui = UI(self.player1, self.player2, self.gameboard)
+        self.gameboard = Gameboard('Ben', 'Josh')
+        self.ui = UI(self.gameboard)
     
     def run(self):
         while True:
             if 'RUN' in self.GAME_STATE:
+                self.ui.handle_events()
                 self.handle_events()
                 self.update_screen()
                 self.CLOCK.tick(FPS)
