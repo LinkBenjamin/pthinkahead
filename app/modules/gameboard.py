@@ -18,7 +18,7 @@ class Gameboard:
         self.player2 = Player(player_2_name)  # Create a player for p2
         
         # Initialize the tile matrix.
-        self.tiles = [[Tile((i, j),randint(-20, 20)) for j in range(GAME_COLS)] for i in range(GAME_ROWS)]
+        self.tiles = [[Tile((i, j),randint(-15, 15)) for j in range(GAME_COLS)] for i in range(GAME_ROWS)]
         # Eliminate the (0,0) entry and replace it with the cursor so that we have a starting point
         # I got 99 tiles but this ain't one ;)
         self.tiles[0][0].set_cursor()
