@@ -15,6 +15,7 @@ class Tile():
         self.location = coordinates * TILE_SIZE           # Tuple, x and y pixel coordinates used to draw the square
         self.is_cursor = False
         self.is_highlighted = False
+        self.is_played = False
         
         # Drawing properties
         self.display_surface = pygame.display.get_surface()
@@ -41,6 +42,9 @@ class Tile():
     def set_blank(self):
         self.face_value = ' '
         self.active = False
+        self.is_cursor = False
+        self.is_played = True
+        self.clear_highlight()
 
     def highlight(self):
         self.is_highlighted = True
@@ -57,6 +61,8 @@ class Tile():
             pygame.draw.rect(self.display_surface, COLORS_CURSOR,self.tile_rect)
         elif self.is_highlighted:
             pygame.draw.rect(self.display_surface, COLORS_TILE_HIGHLIGHT,self.tile_rect)
+        elif self.is_played:
+            pygame.draw.rect(self.display_surface, COLORS_PLAYED, self.tile_rect)
         else:
             pygame.draw.rect(self.display_surface, COLORS_TILE_BACKGROUND,self.tile_rect)
         self.display_surface.blit(value_surf, value_rect)

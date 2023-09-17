@@ -7,6 +7,7 @@ COLORS_TILE_TEXT = 'black'
 COLORS_WINDOW_BACKGROUND = 'black'
 COLORS_WINDOW_TEXT = 'white'
 COLORS_CURSOR = 'orange'
+COLORS_PLAYED = 'black'
 COLORS_TILE_HIGHLIGHT = 'green'
 
 GAME_TITLE = "pThinkAhead v.01"

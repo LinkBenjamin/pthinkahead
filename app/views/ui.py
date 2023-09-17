@@ -36,3 +36,6 @@ class UI:  # Controls the overall running of the game.
             # scramble the board (if allowed)
             if (not self.gameboard.player_turn) and self.gameboard.player2.scramble_rect.collidepoint(location):
                 self.gameboard.scramble()
+
+        if self.gameboard.game_over:
+            self.gameboard.draw_winner()
