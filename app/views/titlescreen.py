@@ -14,12 +14,12 @@ class TitleScreen:
         self.manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT))
         
         # Create labels for Player 1 & Player 2
-        self.p1label = UILabel(relative_rect=Rect(50,300,150,30),text="Player 1:")
-        self.p2label = UILabel(relative_rect=Rect(50,350,150,30),text="Player 2:")
+        self.p1label = UILabel(relative_rect=Rect(50,200,150,30),text="Player 1:")
+        self.p2label = UILabel(relative_rect=Rect(50,250,150,30),text="Player 2:")
 
         # Create text entry lines for player names
-        self.player_1_name = UITextEntryLine(relative_rect=Rect(200, 300, 200, 30), manager=self.manager)
-        self.player_2_name = UITextEntryLine(relative_rect=Rect(200, 350, 200, 30), manager=self.manager)
+        self.player_1_name = UITextEntryLine(relative_rect=Rect(200, 200, 200, 30), manager=self.manager)
+        self.player_2_name = UITextEntryLine(relative_rect=Rect(200, 250, 200, 30), manager=self.manager)
 
         self.clock = pygame.time.Clock()
 
