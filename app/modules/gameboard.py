@@ -55,7 +55,7 @@ class Gameboard:
         score_value = tile.play()
         p.score(score_value)
         # 3) Add the move to the game log
-        self.prepend_game_log(p.name + " > " + str(tile.coordinates) + " (" + str(score_value) + " pts)\n")
+        self.prepend_game_log(p.name + " plays " + str(tile.coordinates) + " for " + str(score_value) + " points")
         # 4) change this tile to be the new cursor
         self.cursor = tile.coordinates
         # 5) change to the other player's turn
@@ -74,7 +74,7 @@ class Gameboard:
         if p.has_scramble:
             p.scramble() # This removes the player's ability to scramble in the future
             self.randomize()
-            self.prepend_game_log(p.name + " scrambles!\n")
+            self.prepend_game_log(p.name + " scrambles!")
 
         self.game_over = self.check_game_over()
 
@@ -177,4 +177,4 @@ class Gameboard:
         
 
     def prepend_game_log(self, new_log):
-        self.gamelog.text = new_log + self.gamelog.text
+        self.gamelog.text = new_log + "\n" + self.gamelog.text
