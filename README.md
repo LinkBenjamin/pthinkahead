@@ -9,3 +9,7 @@ The game is a one- or two- player board game (play against the CPU or a friend).
 `main.py` is the main module, you should be able to execute `#> python main.py` and the game should start.
 
 This is implemented with the [pygame](https://www.pygame.org/docs/) library.
+
+# How to build the app
+
+[REQUIREMENTS.txt](REQUIREMENTS.txt) contains the dependencies list.  You can run `pip install -r REQUIREMENTS.txt` in your workspace to set up, and then `python main.py` should run it.  Note that this is built with **Python 3.12**.

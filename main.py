@@ -2,6 +2,7 @@ import pygame, sys
 from app.modules.gametile import Tile
 from app.modules.player import Player
 from app.views.ui import UI
+from app.views import titlescreen
 from app.modules.gameboard import Gameboard
 from config.constants import *
 
@@ -11,15 +12,21 @@ class PThinkAhead():
         self.WINDOW = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.WINDOW.fill(COLORS_WINDOW_BACKGROUND)
         self.CLOCK = pygame.time.Clock()
-        self.GAME_STATE = 'RUN'
+        self.GAME_STATE = 'TITLE'
         pygame.display.set_caption(GAME_TITLE)
-    
-        #self.new_game_screen = NewGameScreen()
-        self.gameboard = Gameboard('Ben', 'Josh')
-        self.ui = UI(self.gameboard)
-    
+        self.titlescreen = titlescreen.TitleScreen(screen=self.WINDOW)
+        self.ui = ' '
+        self.gameboard=' '
     def run(self):
         while True:
+            if 'TITLE' in self.GAME_STATE:
+                self.GAME_STATE = self.titlescreen.handle_events()
+                self.titlescreen.render()
+            if 'SETUP' in self.GAME_STATE:
+                names = self.titlescreen.get_player_info()
+                self.gameboard = Gameboard(names['player1']['name'], names['player2']['name'])
+                self.ui = UI(self.gameboard)
+                self.GAME_STATE = 'RUN'
             if 'RUN' in self.GAME_STATE:
                 self.ui.handle_events()
                 self.handle_events()
