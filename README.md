@@ -10,6 +10,8 @@ pThinkAhead is a two- player board game. The goal is to have more points than yo
 
 This is implemented with the [pygame](https://www.pygame.org/docs/) library.
 
+You'll probably need to run this with python 3.10.x or 3.11.x.
+
 # How to build the app
 
 [REQUIREMENTS.txt](REQUIREMENTS.txt) contains the dependencies list.  You can run `pip install -r REQUIREMENTS.txt` in your workspace to set up, and then `python main.py` should run it.  Note that this is built with **Python 3.12**.
