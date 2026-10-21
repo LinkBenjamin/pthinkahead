@@ -8,7 +8,7 @@ pThinkAhead is a two- player board game. The goal is to have more points than yo
 
 `main.py` is the main module, you should be able to execute `#> python main.py` and the game should start.
 
-This is implemented with the [pygame](https://www.pygame.org/docs/) library.
+This is implemented with [pygame-ce](https://pyga.me/), a pygame-compatible fork used by `pygame_gui`.
 
 You'll probably need to run this with python 3.10.x or 3.11.x.
 
